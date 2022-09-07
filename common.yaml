@@ -43,6 +43,11 @@ images:
     buildKit:
       args: [--secret, 'id=npmrc,src=${HOME}/.npmrc']
 
+functions:
+  aws_login: |-
+    aws-vault exec development:ro -- aws ecr get-login-password --region us-east-1 \
+      | docker login --username AWS --password-stdin "$DEVELOPMENT_AWS_ECR_URL/${DEVSPACE_NAME}"
+
 commands:
   create-space:
     command: |-
