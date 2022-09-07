@@ -56,7 +56,7 @@ commands:
 deployments:
   redis:
     helm:
+      releaseName: ${DEVSPACE_NAME}-redis
       chart:
         name: redis
-        releaseName: ${DEVSPACE_NAME}-redis
         repo: https://hqo.jfrog.io/artifactory/helm
