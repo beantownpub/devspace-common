@@ -1,0 +1,44 @@
+version: v2beta1
+name: devspace-common
+require:
+  devspace: '>= 6.0.1'
+  commands:
+  - name: helm
+    version: '>= v3.9.3'
+  - name: aws
+    version: '>= 2.7.21'
+    versionArgs: ["--version"]
+    versionRegEx: "aws-cli/(\\d+\\.\\d+\\.\\d+)"
+  plugins:
+  - name: loft
+    version: ">= 2.2.2"
+
+vars:
+  CIRCLE_SHA1:
+    source: env
+    default: "${GIT_HASH}"
+  DEVELOPMENT_AWS_ECR_URL:
+    source: env
+  GIT_HASH:
+    source: command
+    command: git
+    args: ["rev-parse", "HEAD"]
+  TAG:
+    source: command
+    command: echo "development-${GIT_HASH}"
+  USERNAME:
+    source: command
+    command: git config --get user.name | tr '[:upper:] .' '[:lower:]-'
+  REPO_NAME:
+    source: command
+    command: basename -s .git "$(git config --get remote.origin.url)"
+  
+images:
+  app:
+    image: "${DEVELOPMENT_AWS_ECR_URL}/${DEVSPACE_NAME}"
+    dockerfile: ./Dockerfile
+    skipPush: false
+    tags:
+      - "${TAG}"
+    buildKit:
+      args: [--secret, 'id=npmrc,src=${HOME}/.npmrc']
