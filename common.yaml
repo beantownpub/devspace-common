@@ -32,7 +32,11 @@ vars:
   REPO_NAME:
     source: command
     command: basename -s .git "$(git config --get remote.origin.url)"
-  
+    
+commands:
+  create-space:
+    command: |-
+      devspace use namespace "${USERNAME}-${REPO_NAME}" --create  
 images:
   app:
     image: "${DEVELOPMENT_AWS_ECR_URL}/${DEVSPACE_NAME}"
