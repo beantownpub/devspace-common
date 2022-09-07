@@ -42,8 +42,3 @@ images:
       - "${TAG}"
     buildKit:
       args: [--secret, 'id=npmrc,src=${HOME}/.npmrc']
-      
- commands:
-  create-space: 
-    command: |-
-      devspace use namespace "${USERNAME}-${REPO_NAME}" --create
