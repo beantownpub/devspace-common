@@ -44,5 +44,6 @@ images:
       args: [--secret, 'id=npmrc,src=${HOME}/.npmrc']
       
  commands:
-  create-space: |-
-    devspace use namespace "${USERNAME}-${REPO_NAME}" --create
+  create-space: 
+    command: |-
+      devspace use namespace "${USERNAME}-${REPO_NAME}" --create
