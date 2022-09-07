@@ -50,3 +50,13 @@ commands:
   delete-space:
     command: |-
       loft delete space "${USERNAME}-${REPO_NAME}" --cluster development
+      
+## Deployments ##################################################################################################
+
+deployments:
+  redis:
+    helm:
+      chart:
+        name: redis
+        releaseName: ${DEVSPACE_NAME}-redis
+        repo: https://hqo.jfrog.io/artifactory/helm
